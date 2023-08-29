@@ -1,0 +1,4 @@
+<button (click)="clicked()" class="button" [ngClass]="{'is-success': selected, 'is-outlined': !selected}">
+    <span *ngIf="selected">✔</span>
+    <span *ngIf="!selected">✘</span>
+</button>

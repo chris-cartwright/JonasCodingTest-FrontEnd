@@ -1,0 +1,62 @@
+<style>
+</style>
+
+<section class="section">
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th rowspan="2" class="has-background-primary">Toppings</th>
+          <th colspan="4" class="has-background-light">Pizza Size</th>
+        </tr>
+        <tr>
+          <th *ngFor="let pizzaSize of pizzaSizes">
+            {{pizzaSize.Title}} (${{pizzaSize.Cost}})
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="has-background-light">
+          <th colspan="5">Veg Toppings</th>
+        </tr>
+        <tr *ngFor="let topping of vegetableToppings">
+          <th>{{topping.Title}} (${{topping.Cost}})</th>
+          <th *ngFor="let pizzaSize of pizzaSizes">
+            <app-checkbox [size]="pizzaSize.Title" [topping]="topping.Title"
+              (selectedChange)="changeTopping($event, pizzaSize.Title, topping.Title)"
+              [selected]="order[pizzaSize.Title][topping.Title]" />
+          </th>
+        </tr>
+        <tr class="has-background-light">
+          <th colspan="5">Non Veg Toppings</th>
+        </tr>
+        <tr *ngFor="let topping of nonVegetableToppings">
+          <th>{{topping.Title}} (${{topping.Cost}})</th>
+          <th *ngFor="let pizzaSize of pizzaSizes">
+            <app-checkbox [size]="pizzaSize.Title" [topping]="topping.Title"
+              (selectedChange)="changeTopping($event, pizzaSize.Title, topping.Title)"
+              [selected]="order[pizzaSize.Title][topping.Title]" />
+          </th>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="has-background-info">
+          <th colspan="5">Total</th>
+        </tr>
+        <tr>
+          <th>Offer</th>
+          <td *ngFor="let size of pizzaSizes">{{ discounts[size.Title]?.Name }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td *ngFor="let size of pizzaSizes">
+            <div *ngIf="discounts[size.Title] !== null" style="text-decoration: line-through">
+              {{ discounts[size.Title]?.Amount|currency }}
+            </div>
+            {{ total[size.Title]|currency }}
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
